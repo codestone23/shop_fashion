@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Male_Fashion Template">
+  <meta name="keywords" content="Male_Fashion, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Male-Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <style>
+    /*.shop tr td:nth-child(2){*/
+    /*  float: right;*/
+    /*}*/
+    /*.shop tr td:nth-child(1){*/
+    /*  float: left;*/
+    /*}*/
+  </style>
+</head>
+
+<body>
+<div class="offcanvas-menu-overlay"></div>
+<header class="header">
+  <div class="header__top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-md-7"></div>
+        <div class="col-lg-7 col-md-5">
+          <div class="header__top__right">
+            <div class="header__top__links">
+              <a  th:href="@{manager}" th:if="${session.roles.contains('ADMIN')}">
+                <i class="fa-solid fa-wrench"></i>
+                Trang quản trị</a>
+              <span style="margin-right: 5px">
+                                <i class="fa-solid fa-user" style="color: white"></i>
+                                </span>
+              <a th:href="@{login}" th:if="${session.customer == null}">
+                <!--                                    <i class="fa-solid fa-user"></i>-->
+                Đăng nhập</a>
+              <a class="name-login" style="text-decoration: none" th:if="${session.customer != null}" th:text="${session.customer.username}"></a>
+              <a href="#">
+                <i class="fa-regular fa-circle-question"></i>
+                FAQs</a>
+              <a th:href="@{logout}" th:if="${session.customer != null}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3">
+        <div class="header__logo">
+          <a th:href="@{index}"><img src="/static/img/logo.png" alt=""></a>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <nav class="header__menu mobile-menu">
+          <ul>
+            <li class="active"><a th:href="@{index}">Home</a></li>
+            <li><a th:href="@{shop}">Shop</a></li>
+            <li><a href="#">Pages</a>
+              <ul class="dropdown">
+                <li><a th:href="@{about_us}">About Us</a></li>
+                <li><a th:href="@{shopping_cart}">Shopping Cart</a></li>
+                <li><a th:href="@{blog_details}">Blog Details</a></li>
+              </ul>
+            </li>
+            <li><a th:href="@{blog}">Blog</a></li>
+            <li><a th:href="@{contact}">Contacts</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="header__nav__option">
+          <a href="#" class="search-switch"><img src="/static/img/icon/search.png" alt=""></a>
+          <a href="#"><img src="/static/img/icon/heart.png" alt=""></a>
+          <a th:href="@{getsession}">
+            <i class="fa" style="font-size:20px;color: black">&#xf07a;</i>
+            <span style="left: 29px;top: -7px;padding: 1px 4px;" class='badge badge-warning' id='lblCartCount' th:text="${session.count.size()}"></span>
+          </a>
+          <!--                        <span class='badge badge-warning' id='lblCartCount' th:text="${session.count.size()}"> </span>-->
+        </div>
+      </div>
+    </div>
+    <div class="canvas__open"><i class="fa fa-bars"></i></div>
+  </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__text">
+          <h4>Thông tin cá nhân</h4>
+          <div class="breadcrumb__links">
+            <a th:href="@{index}">Home</a>
+            <span>Details</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad" style="padding-top: 30px">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4" style="background-color: #f6f6f6;border-radius: 14px">
+        <div style="display: flex;align-items: center;justify-content: center">
+          <img style="width: 50px;height: 50px;border-radius: 50%;margin-bottom: 30px;margin-top: 20px" src="data:image/jpeg;base64,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" alt="">
+        </div>
+        <div style="overflow: hidden">
+          <table class="table">
+              <tr>
+                <td>FullName </td>
+                <td th:text="${user.getFullName()}"></td>
+              </tr>
+            <tr>
+              <td>Email </td>
+              <td th:text="${user.getEmail()}"></td>
+            </tr>
+            <tr>
+              <td>PhoneNumber</td>
+              <td th:text="${user.getNumberPhone()}"></td>
+            </tr>
+            <tr>
+              <td>Date </td>
+              <td th:text="${user.getDate()}"></td>
+            </tr>
+            <tr>
+              <td>Gender </td>
+              <td th:text="${user.getGender()}"></td>
+            </tr>
+            <tr>
+              <td>Address </td>
+              <td th:text="${user.getAddress()}"></td>
+            </tr>
+            <tr>
+              <td><button type="button" class="btn btn-primary">Đổi mật khẩu</button></td>
+              <td><button type="button" class="btn btn-primary">Sửa thông tin </button></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-8">
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shop Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer__about">
+          <div class="footer__logo">
+            <a href="#"><img src="/static/img/footer-logo.png" alt=""></a>
+          </div>
+          <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+          <a href="#"><img src="/static/img/payment.png" alt=""></a>
+        </div>
+      </div>
+      <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+        <div class="footer__widget">
+          <h6>Sản phẩm</h6>
+          <ul>
+            <li><a href="#">Cửa hàng quần áo</a></li>
+            <li><a href="#">Xu hướng</a></li>
+            <li><a href="#">Phụ kiện</a></li>
+            <li><a href="#">Doanh thu</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-3 col-sm-6">
+        <div class="footer__widget">
+          <h6>Hỗ trợ</h6>
+          <ul>
+            <li><a href="#">Liên hệ</a></li>
+            <li><a href="#">Phương thức thanh toán</a></li>
+            <li><a href="#">Vận chuyển</a></li>
+            <li><a href="#">Trả lại và trao đổi</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+        <div class="footer__widget">
+          <h6>Đăng kí theo dõi</h6>
+          <div class="footer__newslatter">
+            <p>Hãy là người đầu tiên biết về những người mới đến, sách tìm kiếm, bán hàng và khuyến mãi!</p>
+            <form action="#">
+              <input type="text" placeholder="Your email">
+              <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <div class="footer__copyright__text">
+          <p>Copyright ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+  <div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="search-close-switch">+</div>
+    <form class="search-model-form">
+      <input type="text" id="search-input" placeholder="Search here.....">
+    </form>
+  </div>
+</div>
+<script>
+
+
+
+
+</script>
+<!-- Js Plugins -->
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.nice-select.min.js"></script>
+<script src="/static/js/jquery.nicescroll.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/jquery.countdown.min.js"></script>
+<script src="/static/js/jquery.slicknav.js"></script>
+<script src="/static/js/mixitup.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/main.js"></script>
+</body>
+
+</html>

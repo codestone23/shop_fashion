@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+        #lblCartCount {
+            font-size: 12px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0 5px;
+            vertical-align: top;
+            margin-left: -10px;
+        }
+        .badge {
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+        .label-warning[href],.badge-warning[href] {
+            background-color: #c67605;
+        }
+        .checkout__select ul,select{
+            max-height: 250px;
+            overflow-y: auto!important;
+        }
+        .name-login:hover{
+            color: white!important;
+        }
+        .checkout__input input{
+            color: black!important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+<!--    <div id="preloder">-->
+<!--        <div class="loader"></div>-->
+<!--    </div>-->
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Usd <i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li>USD</li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="/static/img/icon/search.png" alt=""></a>
+            <a href="#"><img src="/static/img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="/static/img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">$0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-7">
+
+                    </div>
+                    <div class="col-lg-7 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a  th:href="@{manager}" th:if="${session.roles.contains('ADMIN')}">
+                                    <i class="fa-solid fa-wrench"></i>
+                                    Trang quản trị</a>
+                                <span style="margin-right: 5px">
+                                <i class="fa-solid fa-user" style="color: white"></i>
+                                </span>
+                                <a th:href="@{login}" th:if="${session.customer == null}">
+                                    <!--                                    <i class="fa-solid fa-user"></i>-->
+                                    Đăng nhập</a>
+                                <a class="name-login" style="text-decoration: none" th:if="${session.customer != null}" th:text="${session.customer.username}"></a>
+                                <a href="#">
+                                    <i class="fa-regular fa-circle-question"></i>
+                                    FAQs</a>
+                                <a th:href="@{logout}" th:if="${session.customer != null}">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Logout</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a th:href="@{index}"><img src="/static/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a th:href="@{index}">Home</a></li>
+                            <li class="active"><a th:href="@{shop}">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a th:href="@{about_us}">About Us</a></li>
+                                    <li><a th:href="@{shopping_cart}">Shopping Cart</a></li>
+                                    <li><a th:href="@{blog_details}">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a th:href="@{blog}">Blog</a></li>
+                            <li><a th:href="@{contact}">Contacts</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><img src="/static/img/icon/search.png" alt=""></a>
+                        <a href="#"><img src="/static/img/icon/heart.png" alt=""></a>
+                        <a th:href="@{getsession}">
+                            <i class="fa" style="font-size:20px;color: black">&#xf07a;</i>
+                            <span style="left: 29px;top: -7px;padding: 1px 4px;" class='badge badge-warning' id='lblCartCount' th:text="${session.count.size()}"></span>
+                        </a>
+                        <!--                        <span class='badge badge-warning' id='lblCartCount' th:text="${session.count.size()}"> </span>-->
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Check Out</h4>
+                        <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <a href="./shop.html">Shop</a>
+                            <span>Check Out</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <form th:action="@{checkout}" method="post" th:object="${new_client}">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <h6 class="coupon__code">
+                                <i class="fa-solid fa-gift"></i>
+                                  Có mã giảm giá? <a href="#">Ấn vào đây</a> để nhập mã giảm giá của bạn</h6>
+                            <h6 class="checkout__title">THÔNG TIN GIAO HÀNG</h6>
+                            <div class="checkout__input">
+                                <div class="checkout__input">
+                                    <p>Họ và tên<span>*</span></p>
+                                    <input type="text" name="txt_name" placeholder="Họ và tên" required th:field="*{name}">
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Số điện thoại<span>*</span></p>
+                                <input type="text" name="txt_numberphone" placeholder="Nhập số điện thoại" required th:field="*{phone_number}">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Email<span>*</span></p>
+                                <input type="email" name="txt_email" class="checkout__input__add"  placeholder="Nhập email" required th:field="*{email}">
+                            </div>
+                            <div class="checkout__input">
+                                <p>Địa chỉ<span>*</span></p>
+                                <input type="text" name="txt_address" placeholder="Nhập địa chỉ cụ thể" required th:field="*{address}">
+                            </div>
+                            <div class="checkout__select">
+                                <select class="form-control select-parent" id="sel1" name="sellist1" required>
+                                    <option value="0">Tỉnh/ Thành Phố</option>
+                                    <option th:each="city : ${citys}" th:value="${city.id}" th:text="${city.name}" th:selected="${city.id == id_city}"></option>
+                                  </select>
+                            </div>
+                            <div class="row" id="load_ajax_place">
+                                <div class="checkout__select col-lg-6">
+                                    <select name="district" id="district" class="form-control select-parent" onchange="getPlace()" required>
+                                        <option value="0">Quận/ Huyện</option>
+                                        <option th:each="district : ${districts}" th:value="${district.id}" th:text="${district.name}" th:selected="${district.id == id_district}"></option>
+                                    </select>
+                                </div>
+                                <div class="checkout__select col-lg-6">
+                                    <select name="ward" id="ward" class="form-control select-parent" required>
+                                        <option value="0">Phường/ Xã</option>
+                                        <option th:each="ward : ${wards}" th:value="${ward.id}" th:text="${ward.name}" th:selected="${ward.id == id_ward}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Ghi chú: <span>*</span></p>
+                                <input type="text" placeholder="Lưu ý cho người bán">
+                            </div>
+                            <div class="checkout__input__checkbox" th:if="${session.customer == null}">
+                                <label for="acc">
+                                    Tạo một tài khoản?
+                                    <input class="create__account" type="checkbox" id="acc">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>Tạo một tài khoản bằng cách nhập các thông tin dưới đây. Nếu bạn là khách hàng cũ, vui lòng đăng nhập ở đầu trang</p>
+                            </div>
+                            <div class="checkout__input" id="accountPassword" th:if="${session.customer == null}">
+                                <p>Mật khẩu (Mới )<span>*</span></p>
+                                <input type="text">
+                            </div>
+                            <!--                            <div class="checkout__input__checkbox">-->
+<!--                                <label for="diff-acc">-->
+<!--                                    Thanh toán khi nhận hàng-->
+<!--                                    <input type="checkbox" id="diff-acc">-->
+<!--                                    <span class="checkmark"></span>-->
+<!--                                </label>-->
+<!--                            </div>-->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4 class="order__title">Đơn hàng</h4>
+                                <div class="checkout__order__products">Sản phẩm <span>Tổng</span></div>
+                                <ul class="checkout__total__products">
+                                    <li th:each="cart: ${carts}">
+                                        <div style="display: contents;font-size: 15px;font-weight: 700" th:text="${cart.productDTO.name}"></div>
+                                             <span class="product-big-price" th:text="${cart.productDTO.price} + ' VND'"></span>
+                                        <div style="display: flex;width: 100%">
+                                            <div style="flex: 1;" th:text="'Size: '+${cart.size}"></div>
+                                            <span  style="margin-right: 20px" th:text="'x'+${cart.quantity}"></span>
+                                            <div><span th:style="'background-color:'+${cart.code_color}+ ';width: 20px;height: 20px;border: 1px solid #ccc;'"></span></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="checkout__total__details" style="border-top: 1px solid #d7d7d7;padding: 15px 0;">
+                                    <li style="list-style: none;font-size: 16px;color: #111111;line-height: 40px;overflow: hidden;">Đơn hàng
+                                        <span class="cart-total-price" style="color: #e53637;font-weight: 700;float: right;" th:text="${total_price}+' VND'"></span></li>
+                                    <li style="list-style: none;font-size: 16px;color: #111111;line-height: 40px;overflow: hidden;">Giảm
+                                        <span style="color: #e53637;font-weight: 700;float: right;">-0 VND</span></li>
+                                    <li style="list-style: none;font-size: 16px;color: #111111;line-height: 40px;overflow: hidden;">Phí vận chuyển
+                                        <span style="color: #e53637;font-weight: 700;float: right;">0 VND</span></li>
+                                </ul>
+                                <ul class="checkout__total__all">
+<!--                                    <li>Subtotal <span>$750.99</span></li>-->
+                                    <li>Tổng Cộng <span class="total-price" th:text="${total_price} +' VND'"></span></li>
+                                </ul>
+                                <div class="checkout__input__checkbox">
+                                    <label for="cash">
+                                        Thanh toán khi nhận hàng
+                                        <input type="checkbox" id="cash" checked required>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        Check Payment
+                                        <input type="checkbox" id="payment" disabled>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input type="checkbox" id="paypal" disabled>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="site-btn">Hoàn Tất Đặt Hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="/static/img/footer-logo.png" alt=""></a>
+                        </div>
+                        <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                        <a href="#"><img src="/static/img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Sản phẩm</h6>
+                        <ul>
+                            <li><a href="#">Cửa hàng quần áo</a></li>
+                            <li><a href="#">Xu hướng</a></li>
+                            <li><a href="#">Phụ kiện</a></li>
+                            <li><a href="#">Doanh thu</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Hỗ trợ</h6>
+                        <ul>
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Phương thức thanh toán</a></li>
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Trả lại và trao đổi</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Đăng kí theo dõi</h6>
+                        <div class="footer__newslatter">
+                            <p>Hãy là người đầu tiên biết về những người mới đến, sách tìm kiếm, bán hàng và khuyến mãi!</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+    <script>
+        function formatPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        function updatePrice(){
+            $(".product-big-price").each(function () {
+                var price = parseFloat($(this).text().replace(" VND", ""));
+                $(this).text(formatPrice(price) + " VND")
+            });
+            var totalCart = parseFloat($(".cart-total-price").text().replace(" VND", ""));
+            var totalPrice = parseFloat($(".total-price").text().replace(" VND", ""));
+            $(".cart-total-price").text(formatPrice(totalCart) + " VND");
+            $(".total-price").text(formatPrice(totalPrice) + " VND");
+        }
+        function getPlace(){
+            var id_city = $("#sel1").val();
+            var id_district = 0;
+            var id_ward = 0;
+            $.ajax({
+                type: "GET",
+                url: "/get-place",
+                data: {
+                    cityId: id_city,
+                    districtId: id_district,
+                    wardId: id_ward,
+                },
+                success: function (data) {
+                    $("#load_ajax_place").html(data);
+                },
+                error: function (error) {
+                    console.error("Đã xảy ra lỗi:", error);
+                },
+            });
+        }
+        function getPlace1(){
+            var id_city = $("#sel1").val();
+            var id_district = $("#district").val();
+            var id_ward = 0;
+            $.ajax({
+                type: "GET",
+                url: "/get-place",
+                data: {
+                    cityId: id_city,
+                    districtId: id_district,
+                    wardId: id_ward,
+                },
+                success: function (data) {
+                    $("#load_ajax_place").html(data);
+                },
+                error: function (error) {
+                    console.error("Đã xảy ra lỗi:", error);
+                },
+            });
+        }
+        $(document).ready(function() {
+            updatePrice();
+            $('#sel1').on('change', function() {
+                getPlace();
+            });
+            // $('#sel1, #district, #ward').on('change', function() {
+            //     var id_city = $("#sel1").val();
+            //     var id_district = $("#district").val();
+            //     var id_ward = $("#ward").val();
+            //     const url = `/checkout?id_city=${encodeURIComponent(id_city)}&id_district=${encodeURIComponent(id_district)}&id_ward=${encodeURIComponent(id_ward)}`;
+            //     window.location.href = url;
+            // });
+            function toggleAccountPassword() {
+                var isChecked = $("#acc").prop("checked");
+                var accountPasswordDiv = $("#accountPassword");
+                accountPasswordDiv.toggle(isChecked);
+                var accountPasswordInput = accountPasswordDiv.find("input[type='text']");
+                if (isChecked) {
+                    accountPasswordInput.attr("required", "required");
+                } else {
+                    accountPasswordInput.removeAttr("required");
+                }
+            }
+            $("#acc").on("change", function() {
+                toggleAccountPassword();
+            });
+            toggleAccountPassword();
+        });
+    </script>
+
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.nicescroll.min.js"></script>
+    <script src="/static/js/jquery.magnific-popup.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/mixitup.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

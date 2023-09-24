@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+        .card ul li a{
+            color: #0a0e14;
+        }
+
+         #lblCartCount {
+             font-size: 12px;
+             background: #ff0000;
+             color: #fff;
+             padding: 0 5px;
+             vertical-align: top;
+             margin-left: -10px;
+         }
+        .badge {
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+        .label-warning[href],.badge-warning[href] {
+            background-color: #c67605;
+        }
+        .card li.active{
+            background-color: #ccc;
+        }
+        .card li.card-item{
+            margin-bottom: 5px;
+            padding-left: 20px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+        .shop__sidebar__color{
+            margin-left: 10px;
+        }
+        .shop__sidebar__color label.active:after{
+            border-color: black;
+        }
+        .name-login:hover{
+            color: white!important;
+        }
+        .add-cart{
+            color: white!important;
+            background-color: #e53637;
+            width: 100px;
+            text-align: center;
+        }
+        .product__item:hover .product__item__text h6{
+            opacity: 1!important;
+        }
+        .product__item:hover .product__item__text h6{
+            opacity: 1!important;
+        }
+        .product__item:hover .product__item__text a{
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            padding: 4px;
+        }
+        .shop__sidebar__product__size .size-item{
+            color: #111111;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            border: 1px solid #e5e5e5;
+            padding: 6px 18px;
+            margin-bottom: 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        .shop__sidebar__product__size .size-item.active {
+            background: #111111;
+            color: #ffffff;
+            border-color: #111111;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="offcanvas-menu-overlay"></div>
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-7"></div>
+                    <div class="col-lg-7 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                <a  th:href="@{manager}" th:if="${session.roles.contains('ADMIN')}">
+                                    <i class="fa-solid fa-wrench"></i>
+                                    Trang quản trị</a>
+                                <span style="margin-right: 5px">
+                                <i class="fa-solid fa-user" style="color: white"></i>
+                                </span>
+                                <a th:href="@{login}" th:if="${session.customer == null}">
+                                    <!--                                    <i class="fa-solid fa-user"></i>-->
+                                    Đăng nhập</a>
+                                <a class="name-login" style="text-decoration: none" th:if="${session.customer != null}" th:text="${session.customer.username}"></a>
+                                <a href="#">
+                                    <i class="fa-regular fa-circle-question"></i>
+                                    FAQs</a>
+                                <a th:href="@{logout}" th:if="${session.customer != null}">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Logout</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__logo">
+                        <a th:href="@{index}"><img src="/static/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a th:href="@{index}">Home</a></li>
+                            <li class="active"><a th:href="@{shop}">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a th:href="@{about_us}">About Us</a></li>
+                                    <li><a th:href="@{shopping_cart}">Shopping Cart</a></li>
+                                    <li><a th:href="@{blog_details}">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a th:href="@{blog}">Blog</a></li>
+                            <li><a th:href="@{contact}">Contacts</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="#" class="search-switch"><img src="/static/img/icon/search.png" alt=""></a>
+                        <a href="#"><img src="/static/img/icon/heart.png" alt=""></a>
+                        <a th:href="@{getsession}">
+                            <i class="fa" style="font-size:20px;color: black">&#xf07a;</i>
+                            <span style="left: 29px;top: -7px;padding: 1px 4px;" class='badge badge-warning' id='lblCartCount' th:text="${session.count.size()}"></span>
+                        </a>
+                        <!--                        <span class='badge badge-warning' id='lblCartCount' th:text="${session.count.size()}"> </span>-->
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Shop</h4>
+                        <div class="breadcrumb__links">
+                            <a th:href="@{index}">Home</a>
+                            <span>Shop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="shop__sidebar">
+                        <div class="shop__sidebar__search">
+                            <form action="#">
+                                <input type="text" placeholder="Search...">
+                                <button type="submit"><span class="icon_search"></span></button>
+                            </form>
+                        </div>
+                        <div class="shop__sidebar__accordion">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card card-category">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseOne">Kiểu Sản Phẩm</a>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__categories">
+                                                <ul class="nice-scroll">
+                                                    <li class="card-item" th:each="category: ${categorys}"><span th:text="${category.name}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-gender">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseSix">Dành cho </a>
+                                    </div>
+                                    <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__brand">
+                                                <ul class="nice-scroll">
+                                                    <li class="card-item" th:each="gender: ${genders}"><span th:text="${gender.name}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-status">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseSeven">Trạng thái</a>
+                                    </div>
+                                    <div id="collapseSeven" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__brand">
+                                                <ul class="nice-scroll">
+                                                    <li class="card-item" th:each="status: ${status}"><span th:text="${status.name}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-brand">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseTwo">Thương hiệu</a>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__brand">
+                                                <ul>
+                                                    <li class="card-item" th:each="brand: ${brands}"><span th:text="${brand.name}"></span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-price">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseThree">Giá </a>
+                                    </div>
+                                    <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__price">
+                                                <ul>
+                                                    <li class="card-item"><span>0VND - 250.000VND</span></li>
+                                                    <li class="card-item"><span>250.000VND - 500.000VND</span></li>
+                                                    <li class="card-item"><span>500.000VND - 1.000.000VND</span></li>
+                                                    <li class="card-item"><span>1.000.000VND ++</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-size">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseFour">Kích cỡ</a>
+                                    </div>
+                                    <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__product__size">
+                                                <label th:each="size: ${sizes}" class="size-item" th:text="${size.name}" th:for="${size.name}">s
+<!--                                                    <input type="radio" th:id="${size.name}">-->
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-color">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseFive">Màu sắc</a>
+                                    </div>
+                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__color">
+                                                <label th:each="color: ${colors}" class="color-item" th:style="'background-color:'+${color.code}" th:for="${color.name}">
+                                                    <input type="checkbox" th:id="${color.name}">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9" id="body__product">
+                    <div class="shop__product__option">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="shop__product__option__left">
+                                    <p th:text="'Sản phẩm '+${(currentpage - 1) * sizepage + 1}+'-'+${(currentpage)*sizepage}+' trong ' + ${products.size * totalpages} + ' Sản phẩm' "></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="shop__product__option__right">
+                                    <p>Sắp xếp theo giá: </p>
+                                    <select>
+                                        <option value="">Thấp tới Cao</option>
+                                        <option value="">Cao tới Thấp</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6" th:each= "product:${products}">
+                            <div class="product__item sale">
+                                <div class="product__item__pic set-bg" th:data-setbg="${product.img}">
+                                    <a class="details-product" th:href="@{'shop_details?id='+ ${product.id}}">
+                                        <span class="label" th:text="${product.status.name}"></span>
+                                        <ul class="product__hover">
+                                            <li><a href="#"><img src="/static/img/icon/heart.png" alt="">
+                                                <span>Yêu thích</span></a></li>
+                                            <li><a th:href="@{'shop_details?id='+ ${product.id}}"><img src="/static/img/icon/search.png" alt="">
+                                                <span>Chi tiết</span></a></li>
+                                        </ul>
+                                    </a>
+
+                                </div>
+                                <div class="product__item__text">
+                                    <h6 th:text="${product.name}"></h6>
+                                    <a th:href="@{'shop_details?id='+ ${product.id}}" class="add-cart">+ Mua ngay</a>
+                                    <span class="product-price" style="font-size:16px; font-weight:bold" th:text="${product.price}+' VND'"></span>
+                                    <span class="product-old-price" style="font-size:14px; text-decoration: line-through; color:#808080" th:if="${product.old_price != 0}" th:text="${product.old_price}+' VND'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="product__pagination">
+                                    <a th:href="@{'shop?page=1'}" th:if="${currentpage > 1}"><i class="fa-solid fa-angles-left"></i></a>
+                                    <a th:href="@{'shop?page=' + ${currentpage - 1}}" th:if="${currentpage > 1}">
+                                        <i class="fa-solid fa-arrow-left"></i>
+<!--                                        <i class="fa-solid fa-angle-left"></i>-->
+                                    </a>
+                                    <th:block th:if="${totalpages > 0}">
+                                        <th:block th:if="${currentpage > 1}">
+                                            <a th:href="@{'shop?page=' + ${currentpage - 1}}">[[${currentpage - 1}]]</a>
+                                        </th:block>
+
+                                        <a th:href="@{'shop?page=' + ${currentpage}}" class="active">[[${currentpage}]]</a>
+
+                                        <th:block th:if="${currentpage < totalpages}">
+                                            <a th:href="@{'shop?page=' + ${currentpage + 1}}">[[${currentpage + 1}]]</a>
+                                        </th:block>
+                                    </th:block>
+
+                                    <a th:href="@{'shop?page=' + ${currentpage + 1}}" th:if="${currentpage < totalpages}">
+                                        <i class="fa-solid fa-arrow-right"></i>
+<!--                                        <i class="fa-solid fa-angle-right"></i>-->
+                                    </a>
+                                    <a th:href="@{'shop?page=' + ${totalpages}}" th:if="${currentpage < totalpages}"><i class="fa-solid fa-angles-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="/static/img/footer-logo.png" alt=""></a>
+                        </div>
+                        <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế.</p>
+                        <a href="#"><img src="/static/img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Sản phẩm</h6>
+                        <ul>
+                            <li><a href="#">Cửa hàng quần áo</a></li>
+                            <li><a href="#">Xu hướng</a></li>
+                            <li><a href="#">Phụ kiện</a></li>
+                            <li><a href="#">Doanh thu</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Hỗ trợ</h6>
+                        <ul>
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Phương thức thanh toán</a></li>
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Trả lại và trao đổi</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Đăng kí theo dõi</h6>
+                        <div class="footer__newslatter">
+                            <p>Hãy là người đầu tiên biết về những người mới đến, sách tìm kiếm, bán hàng và khuyến mãi!</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <p>Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <script>
+        function formatPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        function updatePrice(){
+            $(".product__item__text").each(function (){
+                var price =  parseFloat($(this).find(".product-price").text().replace(" VND", ""));
+                var old_price =  parseFloat($(this).find(".product-old-price").text().replace(" VND", ""));
+                $(this).find(".product-price").text(formatPrice(price) + " VND");
+                $(this).find(".product-old-price").text(formatPrice(old_price) + " VND");
+            })
+        }
+        $('.product__item__pic').click(function() {
+            let links = $(this).find('.details-product').attr('href');
+            window.location.href = links;
+        });
+        $(document).ready(function() {
+            updatePrice();
+            $('.card-category .card-item').click(function() {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $('.card-category .card-item').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            $('.card-gender .card-item').click(function() {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $('.card-gender .card-item').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            $('.card-brand .card-item').click(function() {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $('.card-brand .card-item').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            $('.card-price .card-item').click(function() {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $('.card-price .card-item').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            // $('.card-size .size-item').click(function() {
+            //     if ($(this).hasClass('active')) {
+            //         $(this).removeClass('active');
+            //     } else {
+            //         $('.card-size .size-item').removeClass('active');
+            //         $(this).addClass('active');
+            //     }
+            // });
+            $('.size-item').click(function() {
+                if ($(this).hasClass('active')){
+                    $(this).removeClass('active');
+                }else{
+                    $('.size-item').removeClass('active');
+                    $(this).addClass('active');
+
+                }
+            });
+            $('.card-status .card-item').click(function() {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $('.card-status .card-item').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            $('.color-item input[type="checkbox"]').change(function() {
+                var $label = $(this).closest('label');
+                if ($(this).is(':checked')) {
+                    $label.addClass('active');
+                    $('.color-item input[type="checkbox"]').not(this).prop('checked', false);
+                    $('.card-color .color-item').not($label).removeClass('active');
+                } else {
+                    // $('.card-color .color-item').removeClass('active');
+                    $label.removeClass('active');
+                }
+            });
+        });
+
+
+
+    </script>
+    <!-- Js Plugins -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/jquery.nicescroll.min.js"></script>
+    <script src="/static/js/jquery.magnific-popup.min.js"></script>
+    <script src="/static/js/jquery.countdown.min.js"></script>
+    <script src="/static/js/jquery.slicknav.js"></script>
+    <script src="/static/js/mixitup.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="/static/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="/static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="/static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="/static/plugins/jqvmap/jqvmap.min.css">
+  <link rel="stylesheet" href="/static/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="/static/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="/static/plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="/static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="/static/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="/static/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="/static/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="/static/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link rel="stylesheet" href="/static/plugins/bs-stepper/css/bs-stepper.min.css">
+  <link rel="stylesheet" href="/static/plugins/dropzone/min/dropzone.min.css">
+  <style>
+    .card{
+      width:400px;
+      height:auto;
+      padding:15px;
+      box-shadow:0 0 5px rgba(0,0,0,0.15);
+      overflow:hidden;
+      background:#fafbff;
+    }
+    .card .top{
+      display:flex;
+      justify-content:space-between;
+      align-self: center;
+      width:100%;
+    }
+    .card .top p{
+      font-size:0.9rem;
+      font-weight:600;
+      color:#878a9a;
+    }
+    .card .top button{
+      outline:0;
+      border:0;
+      -webkit-appearance:none;
+      background:#5256ad;
+      color:#fff;
+      border-radius:4px;
+      transition:0.3s;
+      cursor:pointer;
+      box-shadow:0 0 5px rgba(0,0,0,0.15);
+      font-size:0.8rem;
+      padding:8px 13px;
+    }
+    .card .top button:hover{
+      opacity:0.8;
+    }
+    .card .top button:active{
+      transform:translateY(5px);
+    }
+    .form{
+      width:100%;
+      height:160px;
+      border-radius:5px;
+      border:2px dashed #d5d5e1;
+      color:#c8c9dd;
+      font-size:0.9rem;
+      font-weight:500;
+      position:relative;
+      background:#dfe3f259;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      user-select:none;
+      margin-top:20px;
+    }
+    .form .select{
+      color:#5256ad;
+      margin-left:7px;
+      cursor:pointer;
+    }
+    .form input{
+      display:none;
+    }
+    .form.dragover{
+      border-style:solid;
+      font-size:1.2rem;
+      color:#c8c9dd;
+      font-weight:600;
+      background:rgba(0,0,0,0.34);
+    }
+    .container_file{
+      width:100%;
+      display:flex;
+      justify-content:flex-start;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      position:relative;
+      height:auto;
+      margin-top:20px;
+      max-height:300px;
+      overflow-y:auto;
+    }
+    .container_file .image{
+      height:85px;
+      width:85px;
+      border-radius:5px;
+      box-shadow:0 0 5px rgba(0,0,0,0.15);
+      overflow:hidden;
+      position:relative;
+      margin-bottom:7px;
+      margin-right:7px;
+    }
+    .container_file .image:nth-child(4n){
+      margin-right:0;
+    }
+    .container_file .image img{
+      height:100%;
+      width:100%;
+    }
+    .container_file .image span{
+      background-color: #d21414;
+      box-shadow: 0 0 5px rgba(0,0,0,0.15);
+      position: absolute;
+      right: 0;
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: bold;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 0;
+    }
+    .container_file .image span:hover{
+      opacity:0.8;
+    }
+
+
+    :root {
+      --blue: #0071FF;
+      --light-blue: #B6DBF6;
+      --dark-blue: #005DD1;
+      --grey: #f2f2f2;
+    }
+    .img-area {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: var(--grey);
+      margin-bottom: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .img-area .icon {
+      font-size: 100px;
+    }
+    .img-area h3 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .img-area p {
+      color: #999;
+    }
+    .img-area p span {
+      font-weight: 600;
+    }
+    .img-area img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 100;
+    }
+    .img-area::before {
+      content: attr(data-img);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .5);
+      color: #fff;
+      font-weight: 500;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: all .3s ease;
+      z-index: 200;
+    }
+    .img-area.active:hover::before {
+      opacity: 1;
+    }
+    .select-image {
+      display: block;
+      width: 100%;
+      padding: 16px 0;
+      border-radius: 15px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 500;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+
+  .btn-group {
+    border: 1px solid #ced4da;
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__choice{
+      background-color: #007bff;
+  }
+  </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Home</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="#" class="brand-link">
+      <img src="/static/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Admin</span>
+    </a>
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="https://thespiritofsaigon.net/wp-content/uploads/2022/10/avatar-vo-danh-11.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a th:href="@{index}" class="d-block">Williams Marcus</a>
+        </div>
+      </div>
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Quản lý
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{manager}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Product</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Size</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Color</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Category</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý City</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý District</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Ward</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Client</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Employee</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Gender</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý Status</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <h1 class="m-0">Quản lý</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Quản lý Product</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="col py-3">
+          <h1>Thêm mới</h1>
+          <div class="row mt-2">
+            <nav class="navbar navbar-expand-sm" style="background-color: #eeecec;width: 100%;">
+              <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{saveproduct?name_search=${name_serch}}">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fas fa-plus"></i> Thêm mới</button>
+                </a>
+                <ul class="navbar-nav">
+                  <form method="get" th:action="@{searchproduct}" class="d-flex" style="margin: 10px">
+                    <input class="form-control me-2" name="search" th:value="${name_search}" type="text" placeholder="Search">
+                    <button class="btn btn-primary" type="submit" style="width: 150px;margin-left: 10px"><i class="fas fa-search"></i>Tìm kiếm</button>
+                  </form>
+                </ul>
+              </div>
+            </nav>
+          </div>
+          <div class="container-fluid mt-3">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-10">
+                  <h2>Thêm Mới Sản Phẩm</h2>
+                  <form th:action="@{save(name_search=${name_search})}" th:object="${productDto}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+                    <div class="row mb-2">
+                      <div class="form_group col-lg-6">
+                        <label for="txt_name">Tên sản phẩm</label>
+                        <input type="text" name="txt_name" id="txt_name" class="form-control" placeholder="Nhập tên sản phẩm" th:field="*{name}" required>
+                      </div>
+                      <div class="form_group col-lg-6">
+                        <label for="txt_code">Mã sản phẩm</label>
+                        <input type="text" name="txt_code" id="txt_code" class="form-control" placeholder="Nhập mã sản phẩm" required th:field="*{code}">
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="form_group col-lg-4">
+                        <label for="txt_price">Giá</label>
+                        <input type="text" name="txt_price" id="txt_price" class="form-control" placeholder="Nhập giá" required th:field="*{price}">
+                      </div>
+                      <div class="form_group col-lg-4">
+                        <label for="txt_old_price">Giá (Cũ)</label>
+                        <input type="text" name="txt_old_price" id="txt_old_price" class="form-control" placeholder="Nhập giá cũ" required th:field="*{old_price}">
+                      </div>
+                      <div class="form_group col-lg-4">
+                        <label for="txt_quantity">Số lượng</label>
+                        <input type="text" name="txt_quantity" id="txt_quantity" class="form-control" placeholder="Nhập số lượng" required th:field="*{quantity}">
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="form_group col-lg-4">
+                        <label for="brand">Thương Hiệu</label>
+                        <select id="brand" class="browser-default custom-select" th:field="*{brand.id}">
+                          <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+                        </select>
+                      </div>
+                      <div class="form_group col-lg-4">
+                        <label for="category">Thể loại</label>
+                        <select id="category" class="browser-default custom-select" th:field="*{category.id}">
+                          <option th:each="category : ${categorys}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                      </div>
+                      <div class="form_group col-lg-4">
+                        <label for="gender">Dành cho giới tính</label>
+                        <select id="gender" class="browser-default custom-select" required th:field="*{gender.id}">
+                          <option th:each="gender : ${genders}" th:value="${gender.id}" th:text="${gender.name}"></option>
+                        </select>
+                      </div>
+                    </div>
+                    <div  class="form_group">
+                      <label for="status">Trạng Thái</label>
+                      <select id="status" class="browser-default custom-select" th:field="*{status.id}">
+                        <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.name}"></option>
+                      </select>
+                    </div>
+                    <div class="row mt-3" >
+                      <div class="form-group col-lg-6" style="text-align: center">
+                        <label for="file" class="form-label">Chọn ảnh đại diện</label>
+                        <input type="file" id="file" hidden="hidden" th:field="*{file}">
+                        <div class="img-area" data-img="" style="width: fit-content; margin: 10px auto">
+                          <i class='bx bxs-cloud-upload icon'></i>
+                          <h3>Upload Image</h3>
+                          <p>Image size must be less than <span>2MB</span></p>
+                        </div>
+                        <button class="select-image bg-primary" type="button" style="background-color:#000;width: 100px;margin: 10px auto">Select Image</button>
+                      </div>
+                      <div class="card col-lg-6">
+                        <label for="file" class="form-label">Chọn thêm ảnh</label>
+                        <div class="top">
+                          <p>Drag & drop image uploading.</p>
+                          <button type="button" class="bg-primary select">Upload</button>
+                        </div>
+                        <div class="form dragover">
+                          <span class="inner">Drag & drop image here or <span class="select">Browse</span></span>
+                          <input type="file" class="file" name="file" multiple th:field="*{files}">
+                        </div>
+                        <div class="container_file">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="size">Size sản phẩm</label>
+                      <select id="size" class="select2" multiple data-placeholder="Select a State" style="width: 100%;" name="id_sizes_select">
+                        <option th:each="size : ${sizes}" th:value="${size.id}" th:text="${size.name}"></option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="color">Màu sản phẩm</label>
+                      <select id="color" class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;" name="id_colors_select">
+                        <option th:each="color : ${colors}" th:value="${color.id}">
+                          <span th:text="${color.name}"></span>
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="detail">Viết Mô tả</label>
+                      <textarea id="detail" class="form-control" rows="3" placeholder="Enter ..." style="height: 254px;" th:field="*{detail}"></textarea>
+                    </div>
+                    <button type="submit" class="mt-2 btn btn-primary">Submit</button>
+                    <a th:href="@{manager}">
+                      <button type="button" class="mt-2 btn btn-primary">Trở Về</button>
+                    </a>
+                  </form>
+                </div>
+                <div class="col-lg-2 mt-4">
+                  <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                      <th>Tên màu</th>
+                      <th>Màu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${colors}">
+                      <td th:text="${item.name}"></td>
+                      <td  th:attr="style='background-color: ' + ${item.code} + '; width: 30px; height: 30px;'"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <aside class="control-sidebar control-sidebar-dark">
+  </aside>
+</div>
+
+<script src="/static/plugins/jquery/jquery.min.js"></script>
+<script src="/static/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script>
+  $(function () {
+    $('.select2').select2()
+})
+
+  $.widget.bridge('uibutton', $.ui.button)
+  const selectImage = document.querySelector('.select-image');
+  const inputFile = document.querySelector('#file');
+  const imgArea = document.querySelector('.img-area');
+
+  selectImage.addEventListener('click', function () {
+    inputFile.click();
+  })
+
+  inputFile.addEventListener('change', function () {
+    const image = this.files[0]
+    if(image.size < 2000000) {
+      const reader = new FileReader();
+      reader.onload = ()=> {
+        const allImg = imgArea.querySelectorAll('img');
+        allImg.forEach(item=> item.remove());
+        const imgUrl = reader.result;
+        const img = document.createElement('img');
+        img.src = imgUrl;
+        imgArea.appendChild(img);
+        imgArea.classList.add('active');
+        imgArea.dataset.img = image.name;
+      }
+      reader.readAsDataURL(image);
+    } else {
+      alert("Image size more than 2MB");
+    }
+  })
+  let files = [],
+          button = document.querySelector(".top button"),
+          form = document.querySelector(".form"),
+          container = document.querySelector(".container_file"),
+          text = document.querySelector(".inner"),
+          browse = document.querySelector(".select"),
+          input = document.querySelector(".form input");
+
+  browse.addEventListener('click',() => input.click());
+
+  input.addEventListener('change',()=>{
+    let file = input.files;
+    for(let i = 0;i<file.length;i++){
+      if(files.every(e=>e.name!== file[i].name)){
+        files.push(file[i]);}
+
+    }
+    showImages();
+  })
+  const showImages = () =>{
+    let images = '';
+    files.forEach((e,i) =>{
+      images += `<div class="image">
+                    <img src="${URL.createObjectURL(e)}" alt="image">
+                    <span onclick="delImage(${i})">&times;</span>
+                    </div>`
+    })
+    container.innerHTML = images;
+  }
+  const delImage = index =>{
+    files.splice(index, 1);
+    showImages();
+  }
+
+  form.addEventListener('dragover',e =>{
+    form.classList.add('dragover')
+    text.innerHTML = 'Drop image here'
+  })
+  form.addEventListener('dragleave',e =>{
+    form.classList.remove('dragover')
+    text.innerHTML = 'Drag & drop image here or <span class="select">Browse</span>'
+  })
+  form.addEventListener('drop',e=>{
+    let file = e.dataTransfer.files;
+    for(let i = 0;i<file.length;i++){
+      if(files.every(e=>e.name !== file[i].name)){
+        files.push(file[i]);}
+
+    }
+    showImages();
+
+  })
+  button.addEventListener('click',() =>{
+    let form = new FormData();
+    files.forEach((e,i) => form.append(`file[${i}]`,e))
+  })
+
+</script>
+<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/plugins/chart.js/Chart.min.js"></script>
+<script src="/static/plugins/sparklines/sparkline.js"></script>
+<script src="/static/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/static/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="/static/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="/static/plugins/moment/moment.min.js"></script>
+<script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/static/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="/static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/static/dist/js/adminlte.js"></script>
+<script src="/static/dist/js/demo.js"></script>
+<script src="/static/dist/js/pages/dashboard.js"></script>
+
+
+
+<script src="/static/plugins/jquery/jquery.min.js"></script>
+<!-- Select2 -->
+<script src="/static/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="/static/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="/static/plugins/moment/moment.min.js"></script>
+<script src="/static/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="/static/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="/static/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- BS-Stepper -->
+<script src="/static/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="/static/plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/dist/js/adminlte.min.js"></script>
+
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+</body>
+</html>
